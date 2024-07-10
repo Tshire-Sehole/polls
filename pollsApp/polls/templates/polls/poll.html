@@ -1,0 +1,52 @@
+<!-- bootstrap for template called poll.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            text-align: center;
+            background-color: rgb(135, 222, 161);
+            font-size: medium;
+            font-style: Arial;
+        }
+		ul{
+            list-style-type: none;
+        }
+        header {
+            padding: 20px;
+            background-color: rgb(204, 207, 16);
+            color: rgb(18, 141, 135);
+        }
+        nav ul li {
+            margin-right: 10px;
+        }
+        nav ul li  {
+            color: rgb(50, 43, 151);
+			
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome {{user.username}} to the Polls App</h1>
+    </header>
+    {% block content %}
+		{% if latest_question_list %}
+		<ul>
+			{% for question in latest_question_list %}
+			<li>
+				<a href = "{% url 'polls:detail' question.id %}">
+				{{ question.question_text }}
+				</a>
+			</li>
+		{% endfor %}
+		</ul>
+		{% else %}
+		{% endif %}
+	{% endblock %}
+<footer>
+	<p>Please Select a poll above</p>
+</footer>
+<a href="{% url 'user_auth:logout'%}">LOGOUT </a> 
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!-- bootstrap for template called detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            text-align: center;
+            background-color: burlywood;
+            font-size: medium;
+        }
+        header {
+            background-color: rgb(70, 47, 79);
+            font-size: 25px;
+            color: rgb(2, 2, 2);
+        }
+        nav ul {
+            display:inline-block;
+            list-style-type: style type;
+        }
+        nav ul li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        nav ul li a {
+            color: rgb(39, 126, 61);
+            text-decoration:dashed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Polls</h1>
+        <nav>
+            <ul>
+                <li><a href="/polls/">Polls</a></li>
+        </nav>
+    </header>
+    <!-- webpage conntent -->
+    {% block content %}
+        <h1> {{question.question_text}}</h1>
+        {% if error_message %}
+        <p><strong>{{error_message}}</strong></p>
+        {% endif %}
+
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+        
+            {% for choice in question.choice_set.all %}
+            <input type='radio' name="choice" id="choice {{
+            forloop.counter
+            }}" value="{{ choice.id }}" />
+            <label for="choice {{ forloop.counter }}">
+                {{ choice.choice_text }}
+            </label>
+            <br />
+            {% endfor %}
+            <input type="submit" value="Vote" />
+        </form>
+    {% endblock %}
+<footer>
+    <p> Please select one</p>
+    <a href="{% url 'polls:index' %}">
+        Go Back to Main Page
+    </a>
+</footer>
+</body>
+</html>
+

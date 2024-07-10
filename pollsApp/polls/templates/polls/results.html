@@ -1,0 +1,57 @@
+<!-- bootstrap for template called detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            text-align: center;
+            background-color: rgb(112, 129, 153);
+            font-size: medium;
+            font-style: italic;
+        }
+        ul{
+            list-style-type: none;
+        }
+        nav ul li a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        header {
+            padding: 40px;
+            background-color: rgb(47, 79, 59);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Polls</h1>
+        <nav>
+            <ul>
+                <li><a href="/polls/">Polls</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block content %}
+        <h1> {{ question.question_text }} </h1>
+        <ul>
+            {% for choice in question.choice_set.all %}
+            <li>  {{ choice.choice_text }} -- {{ choice.votes}} vote{{choice.votes|pluralize}} </li>
+            {% endfor %}
+        </ul>    
+        <a href="{% url 'polls:detail' question.id %}">
+            Vote again? 
+        </a>
+    {% endblock %}
+<footer>
+    <p>THANKS FOR VOTING</p>
+    <a href="{% url 'polls:index' %}">
+        Go Back to Main Page
+    </a>
+</footer>
+</body>
+</html>
